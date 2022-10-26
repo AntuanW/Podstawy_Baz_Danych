@@ -1,5 +1,9 @@
 select isnull(Phone,'') + isnull(Fax,'') from Suppliers
 
+select AVG(unitprice) from products
+
+select ProductID from Products where UnitPrice between 10 and 20
+
 select productid, sum(quantity) as total_quantity from orderhist group by productid
 
 --max cena zamawianego produktu dla kazdego zamowienia
