@@ -22,18 +22,19 @@ select OrderID, sum(Quantity * UnitPrice * (1 - Discount)) from [Order Details] 
 --ĆWICZENIE 3
 
 --1 Dla każdego pracownika podaj liczbę obsługiwanych przez niego zamówień
-select EmployeeID, count(EmployeeID) from Orders group by EmployeeID
+select EmployeeID, count(*) from Orders group by EmployeeID
 
 --2 Dla każdego spedytora/przewoźnika podaj wartość "opłata za przesyłkę" przewożonych przez niego zamówień
-
+select ShipVia, sum(Freight) as "opłata za przesyłkę" from Orders group by ShipVia order by ShipVia
 
 --3 Dla każdego spedytora/przewoźnika podaj wartość "opłata za przesyłkę" przewożonych przez niego zamówień w latach o 1996 do 1997
-
+select ShipVia, sum(Freight) as "opłata za przesyłkę" from Orders where year(OrderDate) between 1996 and 1997 group by ShipVia order by ShipVia
 
 
 --ĆWICZENIE 4
 
 --1 Dla każdego pracownika podaj liczbę obsługiwanych przez niego zamówień z podziałem na lata i miesiące
-
+select EmployeeID, year(OrderDate) as "ROK", month(OrderDate) as "MSC", count(*) as "LICZBA" from Orders group by EmployeeID, year(OrderDate), month(OrderDate) with rollup
 
 --2 Dla każdej kategorii podaj maksymalną i minimalną cenę produktu w tej kategorii
+select CategoryID, max(UnitPrice) as "max", min(UnitPrice) as "min" from Products group by CategoryID
