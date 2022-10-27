@@ -13,7 +13,7 @@ select top 10 OrderID, sum(Quantity * UnitPrice * (1 - Discount)) from [Order De
 select ProductID, sum(quantity) from [Order Details] where ProductID < 3 group by ProductID
 
 --2 Zmodyfikuj zapytanie z poprzedniego punktu, tak aby podawało liczbę zamówionych jednostek produktu dla wszystkich produktów
-select ProductID, sum(quantity) from [Order Details] where ProductID < 3 group by ProductID
+select ProductID, sum(quantity) from [Order Details] group by ProductID
 
 --3 Podaj nr zamówienia oraz wartość zamówienia, dla zamówień, dla których łączna liczba zamawianych jednostek produktów jest > 250
 select OrderID, sum(Quantity * UnitPrice * (1 - Discount)) from [Order Details] group by OrderID having sum(Quantity) > 250
@@ -34,7 +34,9 @@ select ShipVia, sum(Freight) as "opłata za przesyłkę" from Orders where year(
 --ĆWICZENIE 4
 
 --1 Dla każdego pracownika podaj liczbę obsługiwanych przez niego zamówień z podziałem na lata i miesiące
-select EmployeeID, year(OrderDate) as "ROK", month(OrderDate) as "MSC", count(*) as "LICZBA" from Orders group by EmployeeID, year(OrderDate), month(OrderDate) with rollup
+select EmployeeID, year(OrderDate) as "ROK", month(OrderDate) as "MSC", count(*) as "LICZBA"
+    from Orders group by EmployeeID, year(OrderDate), month(OrderDate)
+    order by EmployeeID, year(OrderDate), month(OrderDate)
 
 --2 Dla każdej kategorii podaj maksymalną i minimalną cenę produktu w tej kategorii
 select CategoryID, max(UnitPrice) as "max", min(UnitPrice) as "min" from Products group by CategoryID
